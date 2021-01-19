@@ -3,7 +3,7 @@
 #######################
 
 
-def digits_to_words(input_string):
+def digits_to_words(input_string:str) -> str :
     """
     인풋으로 받는 스트링에서 숫자만 추출하여 영어 단어로 변환하여 단어들이 연결된 스트링을 반환함
     아래의 요건들을 충족시켜야함
@@ -28,14 +28,20 @@ def digits_to_words(input_string):
             >>> tp2.digits_to_words(digits_str2)
             'three one four one five'
     """
-    digit_string = []
+
+    # 각 digit에 해당하는 string을 dict로 저장
     digit_map = {
-        0:'zero', 1:'one', 2:'two', 3:'three', 4:'four',
-        5:'five', 6:'six', 7:'seven', 8:'eight', 9:'nine'
+        '0':'zero', '1':'one', '2':'two', '3':'three', '4':'four',
+        '5':'five', '6':'six', '7':'seven', '8':'eight', '9':'nine'
         }
+    
+    # 순회하며 해당하는 값 저장
+    digit_string = []
     for s in input_string :
         if s.isdigit() :
             digit_string.append(digit_map[s])
+
+    # str 형태로 반환
     return ' '.join(digit_string)
 
 
@@ -47,7 +53,7 @@ def digits_to_words(input_string):
 """
 
 
-def to_camel_case(underscore_str):
+def to_camel_case(underscore_str:str) -> str :
     """
     이 문제에서 첫번째 규칙 'underscore variable' 에서 두번째 규칙 'camelcase variable'으로 변환함
     * 앞과 뒤에 여러개의 'underscore'는 무시해도 된
@@ -72,8 +78,19 @@ def to_camel_case(underscore_str):
             "alreadyCamel"
     """
 
-    camelcase_str = ''.join(underscore_str.title().split('_'))
-    if camelcase_str :
-        camelcase_str = camelcase_str[0].lower() + camelcase_str[1:]
+    # '_' 기준으로 문자열 구분
+    split_lst = underscore_str.split('_')
 
+    # 이미 CamelStyle인 문자열은 통과
+    if len(split_lst) == 1 :
+        camelcase_str = ''.join(split_lst)
+    # 첫 번째 단어는 lower(), 이후는 title() 메서드로 처리
+    else :
+        camelcase_str = ''
+        for s in split_lst :
+            if camelcase_str == '' :
+                camelcase_str += s.lower()
+            else :
+                camelcase_str += s.title()
+    
     return camelcase_str
